@@ -1,0 +1,60 @@
+---
+title: "Livesession4assignment"
+author: "Jeff Weltman"
+date: "September 21, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1 - FiveThirtyEight Data
+### *Install the fivethirtyeight package*
+
+```{r Install fivethirtyeight package, echo=TRUE}
+install.packages("fivethirtyeight", repos="http://cran.us.r-project.org")
+```
+
+### *In the listing of data sets, assign the eighteeenth data set to an object 'df'.*
+
+```{r Assigning Data Set, echo=TRUE}
+data(package = "fivethirtyeight")
+df <- fivethirtyeight::college_recent_grads
+browseVignettes(package = "fivethirtyeight")
+# URL http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+```
+
+### *Give the dimensions and column names of this data frame.*
+```{r Dimensions and Column Names, echo=TRUE}
+dim(df)
+colnames(df)
+```
+***
+# Question 2 - Data Summary
+### *Write an R command that gives you the column names of the data frame, then countst he number of columns **but not** rows.*
+```{r Column names and numbers, echo=TRUE}
+colnames(df)
+length(colnames(df))
+```
+
+### *Generate a count of each unique major_category.*
+```{r Major Count, echo=TRUE}
+install.packages("sqldf", repos="http://cran.us.r-project.org")
+library(sqldf)
+major_count <- sqldf("select distinct(major_category) as MajorCategory, count(major_category) as MajorCount from df group by major_category")
+major_count
+```
+
+### *Create a bar plot of major_count.*
+```{r Bar Plot of major_count}
+par(mai=c(1,2.5,1,1))
+barplot(height=major_count$MajorCount,space=0.08,cex.names=.7,names.arg=c(major_count$MajorCategory),las=2,horiz=TRUE,col="Purple",xlab="Majors per Category",main="Count of Recent College Majors")
+```
+
+### *Output the fivethirtyeight data as a .csv without row names.*
+```{r Output CSV, echo=TRUE}
+write.csv(file=paste(getwd(),"/msds/6306/unit4/fivethirtyeight.csv", sep=""), x=major_count, row.names=F)
+```
