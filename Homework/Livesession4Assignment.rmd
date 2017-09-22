@@ -58,3 +58,6 @@ barplot(height=major_count$MajorCount,space=0.08,cex.names=.7,names.arg=c(major_
 ```{r Output CSV, echo=TRUE}
 write.csv(file=paste(getwd(),"/msds/6306/unit4/fivethirtyeight.csv", sep=""), x=major_count, row.names=F)
 ```
+***
+# Question 3
+### Github repo link: https://github.com/jeffweltman/MSDS6306
