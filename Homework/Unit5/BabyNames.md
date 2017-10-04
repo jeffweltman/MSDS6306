@@ -1,16 +1,12 @@
-##########################################################################################################################################
-## Jeff Weltman                                                                                                                          #
-## 10/3/2017                                                                                                                             #
-## MSDS 6306-401 Unit 5 - Baby Names Assignment: Raw Data to Merged Tidy Data                                                            #                        
-##########################################################################################################################################
+## Jeff Weltman                                                                                                                          
+## 10/3/2017                                                                                                                             
+## MSDS 6306-401 Unit 5 - Baby Names Assignment: Raw Data to Merged Tidy Data                                                            
 
 ### This assignment presents the scenario wherein we are hired to discern recently popular baby names to assist our client in the naming process.
 
 ## Raw Data Files
 * yob2015.txt - This text file is comma separated, contains no headers, and includes the data for childn's name, child's gender (binary M or F), and number of times this name was given to a baby born in 2015 in the United States. Source of the data file is unknown.
 * yob2016.txt - This text file is **semicolon** separated, contains no headers, and includes the data for child's name, child's gender (binary M or F), and number of times this name was given to a baby born in 2016 in the United States. Source of the data file is unknown.
-
-### B
 
 ## Data Munging - yob2016.txt
 
