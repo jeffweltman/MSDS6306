@@ -1,0 +1,53 @@
+---
+title: "MSDS6306-Week11-LectureAssignment"
+author: "Jeff Weltman"
+date: "November 6, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## *Pulling historical financial data to graphically analyze volatility*
+
+First, we'll pull in some historical financial data for the S&P 500.
+```{r Pull historical financial data, echo=TRUE}
+library(tseries)
+## S&P 500 (^GSPC)
+###    SNP - SNP Real Time Price. Currency in USD
+SNPdata <- get.hist.quote('^GSPC',quote="Close")
+```
+
+Then we'll calculate the volatility.
+
+```{r volatility calculations, echo=TRUE}
+SNPret <- log(lag(SNPdata)) - log(SNPdata)
+SNPvol <- sd(SNPret) * sqrt(250) * 100
+## Define getVol function for volatility
+getVol <- function(d, logrets) {
+	var = 0
+	lam = 0
+	varlist <- c()
+
+	for (r in logrets) {
+		lam = lam*(1 - 1/d) + 1
+	  var = (1 - 1/lam)*var + (1/lam)*r^2
+		varlist <- c(varlist, var)
+	}
+
+	sqrt(varlist)
+}
+# Calculate volatility over entire length of series for various three different decay factors: 10 30. 100
+volest <- getVol(10,SNPret)
+volest2 <- getVol(30,SNPret)
+volest3 <- getVol(100,SNPret)
+```
+
+Lastly, we'll generate a plot with decay factor 10 and overlay two lines - a red line for decay factor 30 and a blue line for decay factor 100.
+
+```{r Plotting volatility and decay factors, echo=TRUE}
+# Plot the results, overlaying the volatility curves on the data, just as was done in the S&P example.
+plot(volest,type="l", ylab="Volatility", main="Historical Volatility of the S&P 500")
+lines(volest2,type="l", col="red")
+lines(volest3,type="l", col="blue")
